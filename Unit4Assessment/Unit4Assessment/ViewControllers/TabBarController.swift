@@ -7,24 +7,63 @@
 //
 
 import UIKit
+import DataPersistence
 
 class TabBarController: UITabBarController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
+          private var dataPersistence = DataPersistence<Card>(filename: "savedCards.plist")
+          
+//          private var userPreference = UserPreference()
+          
+          private lazy var cardsVC: CardsViewController = {
+            let viewController = CardsViewController()
+            
+            viewController.tabBarItem = UITabBarItem(title: "SavedCards", image: UIImage(systemName: "square.and.pencil"), tag: 0)
+            
+            
+//            viewController.dataPersistence = dataPersistence
+            
+            // ADDITION: injecting userPreference into newsFeedVC
+            
+            
+//            viewController.userPreference = userPreference
+            
+            
+            // ADDITION: setting the newsFeedVC as the delegate object for UserPreference (it will now listen for changes done in the SettingsViewController picker view on UserDefaults)
+            
+            
+//            viewController.userPreference.delegate = viewController
+            return viewController
+          }()
+          
+          private lazy var createVC: CreateViewController = {
+            let viewController = CreateViewController()
+            
+            
+//            viewController.dataPersistence = dataPersistence
+            
+            // step 6: setting up data persistence and its delegate
+//            viewController.dataPersistence.delegate = viewController
+          
+            viewController.tabBarItem = UITabBarItem(title: "CreateCards", image: UIImage(systemName: "pencil.and.outline"), tag: 1)
+            return viewController
+          }()
+          
+          private lazy var searchVC: SearchViewController = {
+            let viewController = SearchViewController()
+            
+            // ADDITION: injecting userPreference into settingsVC
+            
+//            viewController.userPreference = userPreference
+            
+            viewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass.circle.fill"), tag: 2)
+            return viewController
+          }()
+          
+          override func viewDidLoad() {
+            super.viewDidLoad()
+            viewControllers = [UINavigationController(rootViewController: cardsVC),
+                               UINavigationController(rootViewController: createVC),
+                               UINavigationController(rootViewController: searchVC)]
+          }
+        }
