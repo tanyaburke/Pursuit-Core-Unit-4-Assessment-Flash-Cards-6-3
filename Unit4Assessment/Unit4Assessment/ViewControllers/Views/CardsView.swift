@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class CardsView: UIView {
     
     public lazy var collectionView: UICollectionView = {
@@ -30,9 +31,18 @@ class CardsView: UIView {
         }
         
         private func commonInit(){
-            
+            setupCollectionViewConstraints()
         }
  
-    
+    private func setupCollectionViewConstraints() {
+       addSubview(collectionView)
+       collectionView.translatesAutoresizingMaskIntoConstraints = false
+       NSLayoutConstraint.activate([
+         collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+         collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+         collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+         collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
+       ])
+     }
 
 }
