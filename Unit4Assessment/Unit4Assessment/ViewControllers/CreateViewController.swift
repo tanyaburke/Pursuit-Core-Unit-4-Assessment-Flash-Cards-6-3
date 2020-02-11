@@ -21,10 +21,12 @@
 //Make sure to handle all required fields appropriately with alerts to the user. e.g "Title is required," or "The Quiz requires two facts." **All fields are required**
 
 import UIKit
-
+import DataPersistence
 
 class CreateViewController: UIViewController {
 
+    public var dataPersistence: DataPersistence<Card>!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
    view.backgroundColor = .orange

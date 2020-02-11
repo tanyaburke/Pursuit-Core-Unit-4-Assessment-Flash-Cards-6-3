@@ -14,24 +14,184 @@
 
 
 import UIKit
+import DataPersistence
 
 class SearchViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-   view.backgroundColor = .systemTeal
-        // Do any additional setup after loading the view.
+    
+    public var dataPersistence: DataPersistence<Card>!
+    
+    private let searchView = SearchView()
+    
+    
+    public var userPreference: UserPreference!
+    
+    private var chosenCard = Card(id: "", quizTitle: "", facts: [""])
+    // data for our collection view
+    private var cardArray = [Card]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.searchView.collectionView.reloadData()
+//                self.navigationItem.title = (self.newsArticles.first?.section.capitalized ?? " ") + " News"
+            }
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func loadView() {
+        view = searchView
     }
-    */
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground // white when dark mode is off, black when dark mode is on
+        
+        // setting up collection datasource and delegate
+        searchView.collectionView.dataSource = self
+        searchView.collectionView.delegate = self
+        
+        // register a collection view cell
+        searchView.collectionView.register(SearchCardCell.self, forCellWithReuseIdentifier: "newCardCell")
+        
+        // setup search bar
+        searchView.searchBar.delegate = self
+        
+//        let sectionName = userPreference.getSectionName() ?? "Technology"
+//        fetchStories(sectionName)
+    }
+//    private func fetchCards(){
+//        do{
+//          try  CardSupplyService.fetchCards()
+//
+//        } catch{
+//
+//        }
+//    }
+    private func fetchCards(){
+//        CardsAPIClient.fetchCards { [weak self](results) in
+//            switch results{
+//            case .failure:
+//                
+//                
+//            case .success(let cards):
+//                
+//                
+//            }
+//        }
+    }
+//    private func fetchStories(_ section: String) {
+//        NYTTopStoriesAPIClient.fetchTopStories(for: section) { [weak self] (result) in
+//            switch result {
+//            case .failure(let appError):
+//                print("fetching stories error: \(appError)")
+//            case .success(let articles):
+//                self?.newsArticles = articles
+//            }
+//        }
+//    }
+}
 
+extension SearchViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return cardArray.count
+        return 40
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newCardCell", for: indexPath) as? SearchCardCell else {
+            fatalError("could not downcast to SearchCardCell")
+        }
+//        let card = cardArray[indexPath.row]
+//        cell.configreCell(for: card)
+        cell.backgroundColor = .systemBackground
+        return cell
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+             let maxSize: CGSize = UIScreen.main.bounds.size
+               let spacingBetweenItems: CGFloat = 10
+               let numberOfItems: CGFloat = 1
+               let itemHeight: CGFloat = maxSize.height * 0.30
+               let totalSpacing: CGFloat = (2 * spacingBetweenItems) + (numberOfItems - 1) * spacingBetweenItems
+               let itemWidth: CGFloat = (maxSize.width - totalSpacing) / numberOfItems
+               return CGSize(width: itemWidth, height: itemHeight)
+        }
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        }
+        
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        self.chosenCard = cardArray[indexPath.row]
+//        let articleDVC = ArticleDetailViewController()
+        // TODO: after assessement we will be using initializers as dependency injection mechanisms
+//        articleDVC.article = article
+        
+        // step 3: setting up data persistence and its delegate
+//        articleDVC.dataPersistence = dataPersistence
+//        navigationController?.pushViewController(articleDVC, animated: true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if searchView.searchBar.isFirstResponder {
+            searchView.searchBar.resignFirstResponder()
+        }
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+//            fetchStories(sectionName)
+            return
+        }
+        // filter articles based on searchText
+        cardArray = cardArray.filter { $0.quizTitle.lowercased().contains(searchText.lowercased()) }
+    }
+}
+
+// ADDITION: conforming to UserPreferenceDelegate
+//extension NewsFeedViewController: UserPreferenceDelegate {
+//    func didChangeNewsSection(_ userPreference: UserPreference, sectionName: String) {
+//        fetchStories(sectionName)
+//    }
+//}
+
+
+
+extension SearchViewController: SearchCardCellDelegate {
+  func didSelectMoreButton(_ searchCardCell: SearchCardCell, card: Card) {
+    print("didSelectMoreButton: \(card.quizTitle)")
+    // create an action sheet
+    // cancel action
+    // delete action
+    // post MVP shareAction
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+    let saveAction = UIAlertAction(title: "Save", style: .default) { alertAction in
+      self.saveCard(card)
+    }
+    alertController.addAction(cancelAction)
+    alertController.addAction(saveAction)
+    present(alertController, animated: true)
+  }
+//
+    private func saveCard(_ card: Card) {
+//     guard let savedCard = card else { return }
+//       // ADDITION: check for duplicates
+//       if dataPersistence.hasItemBeenSaved(article) {
+//         if let index = try? dataPersistence.loadItems().firstIndex(of: article) {
+//           do {
+//             try dataPersistence.deleteItem(at: index)
+//           } catch {
+//             print("error deleting article: \(error)")
+           }
+//         }
+//       } else {
+//         do {
+//           // save to documents directory
+//           try dataPersistence.createItem(article)
+//         } catch {
+//           print("error saving article: \(error)")
+//         }
+//       }
 }

@@ -33,6 +33,12 @@ class SavedCardsCell: UICollectionViewCell {
         return gesture
       }()
 
+//    private var tapGesture: UITapGestureRecognizer = {
+//        let gesture = UITapGestureRecognizer()
+//        gesture.numberOfTapsRequired = 1
+//        gesture.addTarget(self, action: #selector(didLongPress(_:)))
+//        return gesture
+//    }()
       
       // more button
       // article title
@@ -49,6 +55,7 @@ class SavedCardsCell: UICollectionViewCell {
         label.font = UIFont.preferredFont(forTextStyle: .title2)
         label.textAlignment = .center
         label.text = "Front of card."
+        label.alpha = 1
         label.numberOfLines = 0
         return label
       }()
@@ -59,6 +66,7 @@ class SavedCardsCell: UICollectionViewCell {
         label.textAlignment = .justified
         label.text = "Back  of Card"
         label.numberOfLines = 0
+        label.alpha = 0
         return label
       }()
       
@@ -84,7 +92,7 @@ class SavedCardsCell: UICollectionViewCell {
       }
       
       @objc private func didLongPress(_ gesture: UILongPressGestureRecognizer) {
-//        guard let currentCard = currentCard else { return }
+
         if gesture.state == .began || gesture.state == .changed {
           return
         }
@@ -153,7 +161,7 @@ class SavedCardsCell: UICollectionViewCell {
     public func configreCell(for savedCard: Card) {
         currentCard = savedCard
         
-        articleTitle.text = savedCard.cardTitle
+        articleTitle.text = savedCard.quizTitle
         backOfCard.text = savedCard.facts.description
         
       }

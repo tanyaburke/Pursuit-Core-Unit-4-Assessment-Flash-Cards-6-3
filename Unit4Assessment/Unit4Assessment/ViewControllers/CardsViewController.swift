@@ -21,20 +21,22 @@ class CardsViewController: UIViewController {
     
     public var dataPersistence: DataPersistence<Card>!
     
-//    public var userPreference: UserPreference!
+
     
     
     private let savedCardsView = CardsView()
     
     private var savedCards = [Card]() {
         didSet {
-            savedCardsView.collectionView.reloadData()
+    savedCardsView.collectionView.reloadData()
             if savedCards.isEmpty {
                 // setup our empty view on the collection view background view
-                savedCardsView.collectionView.backgroundView = EmptyView(title: "Saved Articles", message: "There are currently no saved FlashCards. Start by creating your own in the Create tab, or adding one from the Search tab .")
+            savedCardsView.collectionView.backgroundView = EmptyView(title: "Saved Articles", message: "There are currently no saved FlashCards. Start by creating your own in the Create tab, or adding one from the Search tab .")
             } else {
                 // remove empty view from collection view background view
+
                 savedCardsView.collectionView.backgroundView = nil
+               
             }
         }
     }
@@ -46,20 +48,20 @@ class CardsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .yellow
         
-        
+        fetchSavedCards()
         // setting up collection datasource and delegate
         savedCardsView.collectionView.dataSource = self
         savedCardsView.collectionView.delegate = self
         
         // register a collection view cell
         savedCardsView.collectionView.register(SavedCardsCell.self, forCellWithReuseIdentifier: "cardCell")
-        fetchSavedCards()
+       
     }
     
    
     private func fetchSavedCards() {
         do {
-          savedCards = try dataPersistence.loadItems()
+//        savedCards = try dataPersistence.loadItems()
         } catch {
           print("error fetching articles: \(error)")
         }
@@ -73,15 +75,17 @@ extension CardsViewController:UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return savedCards.count
+//        return 40
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardCell", for: indexPath) as? SavedCardsCell else {
              fatalError("could not downcast to SavedCardsCell")
            }
-           let currentCard = savedCards[indexPath.row]
+      let currentCard = savedCards[indexPath.row]
         cell.configreCell(for: currentCard)
            cell.backgroundColor = .systemBackground
+        cell.delegate = self
            return cell
          }
     }
@@ -93,7 +97,7 @@ extension CardsViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
          let maxSize: CGSize = UIScreen.main.bounds.size
            let spacingBetweenItems: CGFloat = 10
-           let numberOfItems: CGFloat = 2
+           let numberOfItems: CGFloat = 1
            let itemHeight: CGFloat = maxSize.height * 0.30
            let totalSpacing: CGFloat = (2 * spacingBetweenItems) + (numberOfItems - 1) * spacingBetweenItems
            let itemWidth: CGFloat = (maxSize.width - totalSpacing) / numberOfItems
@@ -118,7 +122,7 @@ extension CardsViewController: DataPersistenceDelegate {
 
 extension CardsViewController: SavedCardCellDelegate {
   func didSelectMoreButton(_ savedCardCell: SavedCardsCell, card: Card) {
-    print("didSelectMoreButton: \(card.cardTitle)")
+    print("didSelectMoreButton: \(card.quizTitle)")
     // create an action sheet
     // cancel action
     // delete action

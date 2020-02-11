@@ -8,14 +8,16 @@
 
 import Foundation
 
-struct Results: Codable {
-    let cardListType: String
-    let apiVersion: String
-    let cards: [Card]
+
+
+struct Results: Codable{
+   var empty: [Card]
 }
 
 struct Card: Codable & Equatable {
     let id: String
-    let cardTitle: String
+    let quizTitle: String
     let facts: [String]
 }
+
+typealias Empty = [Card]

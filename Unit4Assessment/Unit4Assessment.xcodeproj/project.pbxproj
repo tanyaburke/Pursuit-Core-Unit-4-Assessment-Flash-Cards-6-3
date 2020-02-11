@@ -14,6 +14,8 @@
 		2E391A4723F2FFB400969DD2 /* ImageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2E391A4623F2FFB400969DD2 /* ImageKit */; };
 		2E391A4923F2FFF100969DD2 /* CardAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E391A4823F2FFF100969DD2 /* CardAPIClient.swift */; };
 		2E391A4C23F3004A00969DD2 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E391A4B23F3004A00969DD2 /* Model.swift */; };
+		2E398CC823F34447007E1D21 /* SearchCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E398CC723F34447007E1D21 /* SearchCardCell.swift */; };
+		2E398CCA23F3527B007E1D21 /* JsonParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E398CC923F3527B007E1D21 /* JsonParse.swift */; };
 		2EF5572F23F30D6E0021FBD9 /* UserPrefrences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF5572E23F30D6E0021FBD9 /* UserPrefrences.swift */; };
 		2EF5573223F30E420021FBD9 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF5573123F30E420021FBD9 /* CardsView.swift */; };
 		2EF5573423F30E5A0021FBD9 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF5573323F30E5A0021FBD9 /* CreateView.swift */; };
@@ -44,6 +46,8 @@
 		2E391A4223F2FD2A00969DD2 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2E391A4823F2FFF100969DD2 /* CardAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAPIClient.swift; sourceTree = "<group>"; };
 		2E391A4B23F3004A00969DD2 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		2E398CC723F34447007E1D21 /* SearchCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCardCell.swift; sourceTree = "<group>"; };
+		2E398CC923F3527B007E1D21 /* JsonParse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParse.swift; sourceTree = "<group>"; };
 		2EF5572E23F30D6E0021FBD9 /* UserPrefrences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPrefrences.swift; sourceTree = "<group>"; };
 		2EF5573123F30E420021FBD9 /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
 		2EF5573323F30E5A0021FBD9 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
@@ -95,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				2E391A4823F2FFF100969DD2 /* CardAPIClient.swift */,
+				2E398CC923F3527B007E1D21 /* JsonParse.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -116,6 +121,7 @@
 				2EF5573923F312640021FBD9 /* SavedCardsCell.swift */,
 				2EF5573323F30E5A0021FBD9 /* CreateView.swift */,
 				2EF5573523F30E6C0021FBD9 /* SearchView.swift */,
+				2E398CC723F34447007E1D21 /* SearchCardCell.swift */,
 			);
 			name = Views;
 			path = ViewControllers/Views;
@@ -270,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E398CC823F34447007E1D21 /* SearchCardCell.swift in Sources */,
 				2EF5573423F30E5A0021FBD9 /* CreateView.swift in Sources */,
 				2EF5573823F30F620021FBD9 /* EmptyView.swift in Sources */,
 				2E391A4323F2FD2A00969DD2 /* SearchViewController.swift in Sources */,
@@ -284,6 +291,7 @@
 				2E391A4923F2FFF100969DD2 /* CardAPIClient.swift in Sources */,
 				5790239A23F2EE39000AA216 /* SceneDelegate.swift in Sources */,
 				2E391A4C23F3004A00969DD2 /* Model.swift in Sources */,
+				2E398CCA23F3527B007E1D21 /* JsonParse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
