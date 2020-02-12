@@ -6,6 +6,8 @@
 //  Copyright © 2020 Alex Paul. All rights reserved.
 //
 
+//The user should be able to delete a flash card from their collection, and should NOT be able to add a card that is a duplicate of one that already exists.
+
 import UIKit
 
 class SearchView: UIView {

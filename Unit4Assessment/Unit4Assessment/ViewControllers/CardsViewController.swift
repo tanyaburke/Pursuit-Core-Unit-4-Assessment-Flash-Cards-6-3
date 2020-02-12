@@ -28,10 +28,10 @@ class CardsViewController: UIViewController {
     
     private var savedCards = [Card]() {
         didSet {
-    savedCardsView.collectionView.reloadData()
+//    savedCardsView.collectionView.reloadData()
             if savedCards.isEmpty {
                 // setup our empty view on the collection view background view
-            savedCardsView.collectionView.backgroundView = EmptyView(title: "Saved Articles", message: "There are currently no saved FlashCards. Start by creating your own in the Create tab, or adding one from the Search tab .")
+                savedCardsView.collectionView.backgroundView = EmptyView(title: "Saved Articles", message: "There are currently no saved FlashCards. Start by creating your own in the Create tab, or adding one from the Search tab .")
             } else {
                 // remove empty view from collection view background view
 
@@ -43,10 +43,12 @@ class CardsViewController: UIViewController {
     
     override func loadView() {
         view = savedCardsView
+        
+//        view = EmptyView(title: "Hey", message: "UGHHHHH")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+  //view.backgroundColor = .yellow
         
         fetchSavedCards()
         // setting up collection datasource and delegate
@@ -58,7 +60,7 @@ class CardsViewController: UIViewController {
        
     }
     
-   
+   // TODO:
     private func fetchSavedCards() {
         do {
 //        savedCards = try dataPersistence.loadItems()
@@ -74,16 +76,18 @@ class CardsViewController: UIViewController {
 extension CardsViewController:UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // TODO:
         return savedCards.count
-//        return 40
+//      return 40
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardCell", for: indexPath) as? SavedCardsCell else {
              fatalError("could not downcast to SavedCardsCell")
            }
-      let currentCard = savedCards[indexPath.row]
-        cell.configreCell(for: currentCard)
+        // TODO:
+//      let currentCard = savedCards[indexPath.row]
+//        cell.configreCell(for: currentCard)
            cell.backgroundColor = .systemBackground
         cell.delegate = self
            return cell

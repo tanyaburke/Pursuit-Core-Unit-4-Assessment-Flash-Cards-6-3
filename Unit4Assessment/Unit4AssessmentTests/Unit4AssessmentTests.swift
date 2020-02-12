@@ -36,13 +36,13 @@ class Unit4AssessmentTests: XCTestCase {
            ]
         """.data(using: .utf8)!
         
-        let expectedTitle = "What is the difference between a synchronous & an asynchronous task?"
+        let expectedTitle = "What is the difference between Synchronous & Asynchronous task"
         
         // act
         do {
-          let cards = try JSONDecoder().decode(Results.self, from: jsonData)
+          let cards = try JSONDecoder().decode([Card].self, from: jsonData)
           // assert
-            let supTitle = cards.cards.first?.cardTitle ?? ""
+            let supTitle = cards.first?.quizTitle ?? ""
           XCTAssertEqual(expectedTitle, supTitle)
         } catch {
           XCTFail("decoding error: \(error)")

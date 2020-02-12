@@ -9,15 +9,18 @@
 import Foundation
 
 
+//struct Results: Codable & Equatable {
+//    let cards: [Card]
+//}
 
-struct Results: Codable{
-   var empty: [Card]
-}
 
 struct Card: Codable & Equatable {
-    let id: String
-    let quizTitle: String
+    let id: String?
+   let quizTitle: String
     let facts: [String]
+    
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+      return lhs.quizTitle == rhs.quizTitle
+    }
 }
 
-typealias Empty = [Card]

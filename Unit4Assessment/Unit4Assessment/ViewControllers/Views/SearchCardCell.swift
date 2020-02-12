@@ -95,11 +95,13 @@ class SearchCardCell: UICollectionViewCell {
             if isShowingBack{
               UIView.transition(with: self, duration: duration, options: [.transitionFlipFromRight], animations: {
                 self.backOfCard.alpha = 1.0
+                self.moreButton.alpha = 0.0
                 self.articleTitle.alpha = 0.0
               }, completion: nil)
             } else {
               UIView.transition(with: self, duration: duration, options: [.transitionFlipFromLeft], animations: {
                 self.backOfCard.alpha = 0.0
+                self.moreButton.alpha = 1.0
                 self.articleTitle.alpha = 1.0
               }, completion: nil)
             }
@@ -136,7 +138,7 @@ class SearchCardCell: UICollectionViewCell {
             addSubview(backOfCard)
             backOfCard.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-              backOfCard.topAnchor.constraint(equalTo: moreButton.bottomAnchor),
+              backOfCard.topAnchor.constraint(equalTo: topAnchor),
               backOfCard.leadingAnchor.constraint(equalTo: leadingAnchor),
               backOfCard.bottomAnchor.constraint(equalTo: bottomAnchor),
               backOfCard.trailingAnchor.constraint(equalTo: trailingAnchor),

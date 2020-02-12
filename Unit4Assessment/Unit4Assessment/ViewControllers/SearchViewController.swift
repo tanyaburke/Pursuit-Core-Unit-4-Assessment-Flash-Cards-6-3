@@ -12,6 +12,8 @@
 //### Adding a Flash Card from the Search tab
 //The third view controller loads flash cards from the endpoint below. The user can look through the list of flash cards and add one to their persisted collection using an action sheet. The user should be able to click on a flash card in this collection and view the description using a transition animation.
 
+//The user should be able to delete a flash card from their collection, and should NOT be able to add a card that is a duplicate of one that already exists.
+
 
 import UIKit
 import DataPersistence
@@ -57,6 +59,7 @@ class SearchViewController: UIViewController {
 //        let sectionName = userPreference.getSectionName() ?? "Technology"
 //        fetchStories(sectionName)
     }
+    // TODO:
 //    private func fetchCards(){
 //        do{
 //          try  CardSupplyService.fetchCards()
@@ -65,6 +68,7 @@ class SearchViewController: UIViewController {
 //
 //        }
 //    }
+    // TODO:
     private func fetchCards(){
 //        CardsAPIClient.fetchCards { [weak self](results) in
 //            switch results{
@@ -77,6 +81,8 @@ class SearchViewController: UIViewController {
 //            }
 //        }
     }
+    
+    // TODO:
 //    private func fetchStories(_ section: String) {
 //        NYTTopStoriesAPIClient.fetchTopStories(for: section) { [weak self] (result) in
 //            switch result {
@@ -91,6 +97,7 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // TODO:
 //        return cardArray.count
         return 40
     }
@@ -99,6 +106,7 @@ extension SearchViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newCardCell", for: indexPath) as? SearchCardCell else {
             fatalError("could not downcast to SearchCardCell")
         }
+        // TODO:
 //        let card = cardArray[indexPath.row]
 //        cell.configreCell(for: card)
         cell.backgroundColor = .systemBackground
@@ -121,6 +129,8 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
         }
         
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        // TODO:
 //        self.chosenCard = cardArray[indexPath.row]
 //        let articleDVC = ArticleDetailViewController()
         // TODO: after assessement we will be using initializers as dependency injection mechanisms

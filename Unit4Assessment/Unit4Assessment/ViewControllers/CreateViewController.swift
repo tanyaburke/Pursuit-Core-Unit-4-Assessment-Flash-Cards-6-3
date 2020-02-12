@@ -26,14 +26,18 @@ import DataPersistence
 class CreateViewController: UIViewController {
 
     public var dataPersistence: DataPersistence<Card>!
-    
+       
+    private let createView = CreateView()
+       
     override func viewDidLoad() {
         super.viewDidLoad()
    view.backgroundColor = .orange
         // Do any additional setup after loading the view.
     }
     
-
+    override func loadView() {
+        view = createView
+    }
     /*
     // MARK: - Navigation
 

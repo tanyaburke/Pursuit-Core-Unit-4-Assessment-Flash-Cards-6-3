@@ -24,8 +24,8 @@ struct CardsAPIClient {
         completion(.failure(.networkClientError(appError)))
       case .success(let data):
         do {
-          let cardsArray = try JSONDecoder().decode(Results.self, from: data)
-            completion(.success(cardsArray.empty))
+          let cardsArray = try JSONDecoder().decode([Card].self, from: data)
+            completion(.success(cardsArray))
         } catch {
           completion(.failure(.decodingError(error)))
         }
