@@ -49,6 +49,8 @@ class CreateView: UIView {
         return cb
     }()
     
+
+    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
@@ -86,7 +88,7 @@ class CreateView: UIView {
                     cardFront.topAnchor.constraint(equalTo: textFeild.bottomAnchor, constant: 20),
                   cardFront.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
                   cardFront.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-                  cardFront.heightAnchor.constraint(equalToConstant: 160)
+                  cardFront.heightAnchor.constraint(equalToConstant: 180)
                 ])
               }
     
@@ -98,7 +100,7 @@ class CreateView: UIView {
                       cardBack.topAnchor.constraint(equalTo: cardFront.bottomAnchor, constant: 20),
                     cardBack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
                     cardBack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-                    cardBack.heightAnchor.constraint(equalToConstant: 160)
+                    cardBack.heightAnchor.constraint(equalToConstant: 180)
                   ])
                 }
     

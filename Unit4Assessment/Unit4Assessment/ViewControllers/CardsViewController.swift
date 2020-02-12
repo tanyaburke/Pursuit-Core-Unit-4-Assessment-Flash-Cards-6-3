@@ -28,13 +28,13 @@ class CardsViewController: UIViewController {
     
     private var savedCards = [Card]() {
         didSet {
-//    savedCardsView.collectionView.reloadData()
+            savedCardsView.collectionView.reloadData()
+            
             if savedCards.isEmpty {
-                // setup our empty view on the collection view background view
+               
                 savedCardsView.collectionView.backgroundView = EmptyView(title: "Saved Articles", message: "There are currently no saved FlashCards. Start by creating your own in the Create tab, or adding one from the Search tab .")
             } else {
-                // remove empty view from collection view background view
-
+               
                 savedCardsView.collectionView.backgroundView = nil
                
             }
@@ -48,29 +48,27 @@ class CardsViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-  //view.backgroundColor = .yellow
+        
+        view.backgroundColor = .systemBackground
         
         fetchSavedCards()
+        
         // setting up collection datasource and delegate
         savedCardsView.collectionView.dataSource = self
         savedCardsView.collectionView.delegate = self
         
         // register a collection view cell
         savedCardsView.collectionView.register(SavedCardsCell.self, forCellWithReuseIdentifier: "cardCell")
-       
     }
     
    // TODO:
     private func fetchSavedCards() {
         do {
-//        savedCards = try dataPersistence.loadItems()
+        savedCards = try dataPersistence.loadItems()
         } catch {
           print("error fetching articles: \(error)")
         }
       }
-    
-
-    
 }
 
 extension CardsViewController:UICollectionViewDataSource{
@@ -78,7 +76,7 @@ extension CardsViewController:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // TODO:
         return savedCards.count
-//      return 40
+        //return 40
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,8 +84,8 @@ extension CardsViewController:UICollectionViewDataSource{
              fatalError("could not downcast to SavedCardsCell")
            }
         // TODO:
-//      let currentCard = savedCards[indexPath.row]
-//        cell.configreCell(for: currentCard)
+      let currentCard = savedCards[indexPath.row]
+        cell.configreCell(for: currentCard)
            cell.backgroundColor = .systemBackground
         cell.delegate = self
            return cell
@@ -134,14 +132,14 @@ extension CardsViewController: SavedCardCellDelegate {
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
     let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { alertAction in
-      self.deleteArticle(card)
+      self.deleteItem(card)
     }
     alertController.addAction(cancelAction)
     alertController.addAction(deleteAction)
     present(alertController, animated: true)
   }
   
-  private func deleteArticle(_ card: Card) {
+  private func deleteItem(_ card: Card) {
     guard let index = savedCards.firstIndex(of: card) else {
       return
     }
