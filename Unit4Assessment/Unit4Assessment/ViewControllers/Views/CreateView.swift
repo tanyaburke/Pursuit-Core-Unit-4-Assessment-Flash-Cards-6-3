@@ -42,7 +42,7 @@ class CreateView: UIView {
         return cf
     }()
     
-    public lazy var cardBack: UITextView = {
+public lazy var cardBack: UITextView = {
         let cb = UITextView()
         cb.allowsEditingTextAttributes = true
         cb.autocorrectionType = .default

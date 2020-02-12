@@ -44,7 +44,7 @@ class CardsViewController: UIViewController {
     override func loadView() {
         view = savedCardsView
         
-//        view = EmptyView(title: "Hey", message: "UGHHHHH")
+
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,10 +125,7 @@ extension CardsViewController: DataPersistenceDelegate {
 extension CardsViewController: SavedCardCellDelegate {
   func didSelectMoreButton(_ savedCardCell: SavedCardsCell, card: Card) {
     print("didSelectMoreButton: \(card.quizTitle)")
-    // create an action sheet
-    // cancel action
-    // delete action
-    // post MVP shareAction
+
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
     let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { alertAction in

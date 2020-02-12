@@ -70,7 +70,7 @@ class SearchViewController: UIViewController {
     //        }
     //    }
     // TODO:
-   
+    
     
     private func fetchCards(){
         CardsAPIClient.fetchCards { [weak self](result) in
@@ -87,18 +87,18 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
+        
         return cardArray.count
-        return 40
+        // return 40
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newCardCell", for: indexPath) as? SearchCardCell else {
             fatalError("could not downcast to SearchCardCell")
         }
-      
-                let card = cardArray[indexPath.row]
-                cell.configreCell(for: card)
+        
+        let card = cardArray[indexPath.row]
+        cell.configreCell(for: card)
         cell.backgroundColor = .systemBackground
         return cell
     }
@@ -161,10 +161,7 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: SearchCardCellDelegate {
     func didSelectMoreButton(_ searchCardCell: SearchCardCell, card: Card) {
         print("didSelectMoreButton: \(card.quizTitle)")
-        // create an action sheet
-        // cancel action
-        // delete action
-        // post MVP shareAction
+        
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let saveAction = UIAlertAction(title: "Save", style: .default) { alertAction in
@@ -174,24 +171,23 @@ extension SearchViewController: SearchCardCellDelegate {
         alertController.addAction(saveAction)
         present(alertController, animated: true)
     }
-    //
+    
     private func saveCard(_ card: Card) {
-        //     guard let savedCard = card else { return }
-        //       // ADDITION: check for duplicates
-        //       if dataPersistence.hasItemBeenSaved(article) {
-        //         if let index = try? dataPersistence.loadItems().firstIndex(of: article) {
-        //           do {
-        //             try dataPersistence.deleteItem(at: index)
-        //           } catch {
-        //             print("error deleting article: \(error)")
+        //        guard let savedCard = card else { return }
+        // ADDITION: check for duplicates
+        if dataPersistence.hasItemBeenSaved(card) {
+            //            if let index = try? dataPersistence.loadItems().firstIndex(of: card) {
+            //                do {
+            //                    try dataPersistence.deleteItem(at: index)
+            //                } catch {
+            self.showAlert(title: "Unable to save", message: "This item has already been saved")
+        } else {
+            do {
+                // save to documents directory
+                try dataPersistence.createItem(card)
+            } catch {
+                print("error saving card: \(error)")
+            }
+        }
     }
-    //         }
-    //       } else {
-    //         do {
-    //           // save to documents directory
-    //           try dataPersistence.createItem(article)
-    //         } catch {
-    //           print("error saving article: \(error)")
-    //         }
-    //       }
 }

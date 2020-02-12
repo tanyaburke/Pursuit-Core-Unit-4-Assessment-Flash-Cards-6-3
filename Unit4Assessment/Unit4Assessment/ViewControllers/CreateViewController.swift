@@ -31,6 +31,9 @@ class CreateViewController: UIViewController {
     private var createBarButton: UIBarButtonItem!
     private var cancelBarButton: UIBarButtonItem!
     
+    private let  cardVC = CardsViewController()
+    
+    private var card = Card(id: "", quizTitle: "", facts: [""])
     
     override func loadView() {
         view = createView
@@ -51,26 +54,21 @@ class CreateViewController: UIViewController {
     }
     
     @objc private func createButtonPressed(_ sender: UIBarButtonItem) {
-//        if dataPersistence.hasItemBeenSaved(article) {
-//          if let index = try? dataPersistence.loadItems().firstIndex(of: article) {
-//            do {
-//              try dataPersistence.deleteItem(at: index)
-//            } catch {
-//              print("error deleting article: \(error)")
-//            }
-//          }
-//        } else {
-//          do {
-//            // save to documents directory
-//            try dataPersistence.createItem(article)
-//          } catch {
-//            print("error saving article: \(error)")
-//          }
-//        }
+
+       if dataPersistence.hasItemBeenSaved(card) {
+
+        self.showAlert(title: "Unable to save", message: "This item has already been saved")
         
-//        detailVC.article = article
-//           detailVC.dataPersistence = dataPersistence
-//           navigationController?.pushViewController(detailVC, animated: true)
+       } else {
+          do {
+            // save to documents directory
+            try dataPersistence.createItem(card)
+             navigationController?.pushViewController(cardVC, animated: true)
+          } catch {
+            print("error saving article: \(error)")
+          }
+        }
+       
     }
     
     @objc private func cancelButtonPressed(_ sender: UIBarButtonItem) {
