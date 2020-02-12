@@ -16,14 +16,12 @@ class TabBarController: UITabBarController {
     private var userPreference = UserPreference()
     
     private lazy var cardsVC: CardsViewController = {
-        
-        
         let viewController = CardsViewController()
-        
         viewController.tabBarItem = UITabBarItem(title: "SavedCards", image: UIImage(systemName: "square.and.pencil"), tag: 0)
         
-        
         viewController.dataPersistence = dataPersistence
+        viewController.dataPersistence.delegate = viewController
+      
         
         return viewController
     }()

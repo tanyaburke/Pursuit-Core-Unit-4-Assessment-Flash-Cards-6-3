@@ -71,11 +71,17 @@ class CreateViewController: UIViewController {
             
                     } else if ((dataPersistence?.hasItemBeenSaved) != nil){
             
-                        self.showAlert(title: "Unable to save", message: "This item has already been saved")
+             self.showAlert(title: "Success", message: "This item has been saved")
+                        
         }
         guard let firstFact = backTextOne.text, let secondFact = backTextTwo.text, let title = frontText.text  else { return}
         
         card = Card(id: "", quizTitle: title, facts: [firstFact,"\n", secondFact])
+        
+        createView.cardBackSecond.text = ""
+        createView.cardBackOne.text = ""
+        createView.cardFront.text = ""
+        self.showAlert(title: "Continue?", message: "Complete all fields and hit create to make another FlashCard")
         do {
             
             try dataPersistence.createItem(card)
@@ -83,8 +89,9 @@ class CreateViewController: UIViewController {
             
         } catch {
             print("error saving article: \(error)")
+          
         }
-         self.showAlert(title: "Success", message: "This item has been saved")
+//           self.showAlert(title: "Unable to save", message: "This item has already been saved")
     }
     
     

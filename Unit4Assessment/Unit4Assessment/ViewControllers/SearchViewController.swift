@@ -81,6 +81,7 @@ extension SearchViewController: UICollectionViewDataSource {
         
         let card = cardArray[indexPath.row]
         cell.configreCell(for: card)
+        cell.delegate = self
         cell.backgroundColor = .systemBackground
         return cell
     }
