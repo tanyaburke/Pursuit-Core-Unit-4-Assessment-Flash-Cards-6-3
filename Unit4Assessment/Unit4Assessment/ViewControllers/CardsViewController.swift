@@ -25,16 +25,13 @@ class CardsViewController: UIViewController {
     
     private var savedCards = [Card]() {
         didSet {
-            
-            
-            
             if savedCards.isEmpty {
                 
                 savedCardsView.collectionView.backgroundView = EmptyView(title: "Saved Articles", message: "There are currently no saved FlashCards. Start by creating your own in the Create tab, or adding one from the Search tab .")
             } else {
                 
                 savedCardsView.collectionView.backgroundView = nil
-                fetchSavedCards()
+                
                 savedCardsView.collectionView.reloadData()
                 
             }
@@ -56,6 +53,7 @@ class CardsViewController: UIViewController {
         savedCardsView.collectionView.delegate = self
         
         savedCardsView.collectionView.register(SavedCardsCell.self, forCellWithReuseIdentifier: "cardCell")
+        
     }
     
     public func fetchSavedCards() {
