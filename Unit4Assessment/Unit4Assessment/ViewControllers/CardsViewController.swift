@@ -21,22 +21,22 @@ class CardsViewController: UIViewController {
     
     public var dataPersistence: DataPersistence<Card>!
     
-
-    
-    
     private let savedCardsView = CardsView()
     
     private var savedCards = [Card]() {
         didSet {
-            savedCardsView.collectionView.reloadData()
+            
+            
             
             if savedCards.isEmpty {
-               
+                
                 savedCardsView.collectionView.backgroundView = EmptyView(title: "Saved Articles", message: "There are currently no saved FlashCards. Start by creating your own in the Create tab, or adding one from the Search tab .")
             } else {
-               
+                
                 savedCardsView.collectionView.backgroundView = nil
-               
+                fetchSavedCards()
+                savedCardsView.collectionView.reloadData()
+                
             }
         }
     }
@@ -44,7 +44,7 @@ class CardsViewController: UIViewController {
     override func loadView() {
         view = savedCardsView
         
-
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,58 +52,52 @@ class CardsViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         fetchSavedCards()
-        
-        // setting up collection datasource and delegate
         savedCardsView.collectionView.dataSource = self
         savedCardsView.collectionView.delegate = self
         
-        // register a collection view cell
         savedCardsView.collectionView.register(SavedCardsCell.self, forCellWithReuseIdentifier: "cardCell")
     }
     
-   // TODO:
-    private func fetchSavedCards() {
+    public func fetchSavedCards() {
         do {
-        savedCards = try dataPersistence.loadItems()
+            savedCards = try dataPersistence.loadItems()
         } catch {
-          print("error fetching articles: \(error)")
+            print("error fetching articles: \(error)")
         }
-      }
+    }
 }
 
 extension CardsViewController:UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // TODO:
+        
         return savedCards.count
-        //return 40
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardCell", for: indexPath) as? SavedCardsCell else {
-             fatalError("could not downcast to SavedCardsCell")
-           }
-        // TODO:
-      let currentCard = savedCards[indexPath.row]
+            fatalError("could not downcast to SavedCardsCell")
+        }
+        let currentCard = savedCards[indexPath.row]
         cell.configreCell(for: currentCard)
-           cell.backgroundColor = .systemBackground
+        cell.backgroundColor = .systemBackground
         cell.delegate = self
-           return cell
-         }
+        return cell
     }
-    
+}
 
 
-extension CardsViewController: UICollectionViewDelegateFlowLayout{
+
+extension CardsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         let maxSize: CGSize = UIScreen.main.bounds.size
-           let spacingBetweenItems: CGFloat = 10
-           let numberOfItems: CGFloat = 1
-           let itemHeight: CGFloat = maxSize.height * 0.30
-           let totalSpacing: CGFloat = (2 * spacingBetweenItems) + (numberOfItems - 1) * spacingBetweenItems
-           let itemWidth: CGFloat = (maxSize.width - totalSpacing) / numberOfItems
-           return CGSize(width: itemWidth, height: itemHeight)
+        let maxSize: CGSize = UIScreen.main.bounds.size
+        let spacingBetweenItems: CGFloat = 10
+        let numberOfItems: CGFloat = 1
+        let itemHeight: CGFloat = maxSize.height * 0.30
+        let totalSpacing: CGFloat = (2 * spacingBetweenItems) + (numberOfItems - 1) * spacingBetweenItems
+        let itemWidth: CGFloat = (maxSize.width - totalSpacing) / numberOfItems
+        return CGSize(width: itemWidth, height: itemHeight)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -113,38 +107,38 @@ extension CardsViewController: UICollectionViewDelegateFlowLayout{
 
 
 extension CardsViewController: DataPersistenceDelegate {
-  func didSaveItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
-    fetchSavedCards()
-  }
-  
-  func didDeleteItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
-    fetchSavedCards()
-  }
+    func didSaveItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
+        fetchSavedCards()
+    }
+    
+    func didDeleteItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
+        fetchSavedCards()
+    }
 }
 
 extension CardsViewController: SavedCardCellDelegate {
-  func didSelectMoreButton(_ savedCardCell: SavedCardsCell, card: Card) {
-    print("didSelectMoreButton: \(card.quizTitle)")
-
-    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-    let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { alertAction in
-      self.deleteItem(card)
+    func didSelectMoreButton(_ savedCardCell: SavedCardsCell, card: Card) {
+        print("didSelectMoreButton: \(card.quizTitle)")
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { alertAction in
+            self.deleteItem(card)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        present(alertController, animated: true)
     }
-    alertController.addAction(cancelAction)
-    alertController.addAction(deleteAction)
-    present(alertController, animated: true)
-  }
-  
-  private func deleteItem(_ card: Card) {
-    guard let index = savedCards.firstIndex(of: card) else {
-      return
+    
+    private func deleteItem(_ card: Card) {
+        guard let index = savedCards.firstIndex(of: card) else {
+            return
+        }
+        do {
+            try dataPersistence.deleteItem(at: index)
+        } catch {
+            print("error deleting article: \(error)")
+        }
+        showAlert(title: "Deleted", message: "Item has been removed")
     }
-    do {
-      // deletes from documents directory
-      try dataPersistence.deleteItem(at: index)
-    } catch {
-      print("error deleting article: \(error)")
-    }
-  }
 }

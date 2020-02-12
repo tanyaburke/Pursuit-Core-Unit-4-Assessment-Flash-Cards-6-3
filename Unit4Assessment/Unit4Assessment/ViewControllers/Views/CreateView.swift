@@ -27,22 +27,21 @@ import UIKit
 
 class CreateView: UIView {
     
-    public lazy var textFeild: UITextField = {
+    public lazy var cardFront: UITextField = {
         let tf = UITextField()
-        
         tf.placeholder = "Enter Title of Flash Card"
         tf.backgroundColor = .systemBackground
         return tf
     }()
     
-    public lazy var cardFront: UITextView = {
+    public lazy var cardBackOne: UITextView = {
         let cf = UITextView()
         cf.allowsEditingTextAttributes = true
         cf.autocorrectionType = .default
         return cf
     }()
     
-public lazy var cardBack: UITextView = {
+public lazy var cardBackSecond: UITextView = {
         let cb = UITextView()
         cb.allowsEditingTextAttributes = true
         cb.autocorrectionType = .default
@@ -69,38 +68,38 @@ public lazy var cardBack: UITextView = {
     
     private func setupTextFeildConstraints() {
         
-        addSubview(textFeild)
-        textFeild.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(cardFront)
+        cardFront.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            textFeild.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
-            textFeild.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            textFeild.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            textFeild.heightAnchor.constraint(equalToConstant: 40)
+            cardFront.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            cardFront.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            cardFront.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            cardFront.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
     
     private func setupCardFrontTextConstraints() {
      
-                addSubview(cardFront)
-                cardFront.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(cardBackOne)
+                cardBackOne.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
-                    cardFront.topAnchor.constraint(equalTo: textFeild.bottomAnchor, constant: 20),
-                  cardFront.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-                  cardFront.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-                  cardFront.heightAnchor.constraint(equalToConstant: 180)
+                    cardBackOne.topAnchor.constraint(equalTo: cardFront.bottomAnchor, constant: 20),
+                  cardBackOne.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+                  cardBackOne.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+                  cardBackOne.heightAnchor.constraint(equalToConstant: 180)
                 ])
               }
     
     private func setupCardBackTextConstraints() {
        
-                  addSubview(cardBack)
-                  cardBack.translatesAutoresizingMaskIntoConstraints = false
+                  addSubview(cardBackSecond)
+                  cardBackSecond.translatesAutoresizingMaskIntoConstraints = false
                   NSLayoutConstraint.activate([
-                      cardBack.topAnchor.constraint(equalTo: cardFront.bottomAnchor, constant: 20),
-                    cardBack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-                    cardBack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-                    cardBack.heightAnchor.constraint(equalToConstant: 180)
+                      cardBackSecond.topAnchor.constraint(equalTo: cardBackOne.bottomAnchor, constant: 20),
+                    cardBackSecond.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+                    cardBackSecond.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+                    cardBackSecond.heightAnchor.constraint(equalToConstant: 180)
                   ])
                 }
     

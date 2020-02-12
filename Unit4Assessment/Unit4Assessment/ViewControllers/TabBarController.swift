@@ -34,9 +34,6 @@ class TabBarController: UITabBarController {
         
         viewController.dataPersistence = dataPersistence
         
-        // step 6: setting up data persistence and its delegate
-        //            viewController.dataPersistence.delegate = viewController
-        
         viewController.tabBarItem = UITabBarItem(title: "CreateCards", image: UIImage(systemName: "pencil.and.outline"), tag: 1)
         return viewController
     }()
@@ -45,20 +42,18 @@ class TabBarController: UITabBarController {
         let viewController = SearchViewController()
         
         viewController.dataPersistence = dataPersistence
-        //            viewController.dataPersistence.delegate = viewController
-        
-        
+
         viewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass.circle.fill"), tag: 2)
         return viewController
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                    viewControllers = [UINavigationController(rootViewController: cardsVC),
-                                       UINavigationController(rootViewController: createVC),
-                                       UINavigationController(rootViewController: searchVC)]
+        viewControllers = [UINavigationController(rootViewController: cardsVC),
+                           UINavigationController(rootViewController: createVC),
+                           UINavigationController(rootViewController: searchVC)]
         
-
-
+        
+        
     }
 }

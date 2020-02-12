@@ -31,6 +31,11 @@ class CreateViewController: UIViewController {
     private var createBarButton: UIBarButtonItem!
     private var cancelBarButton: UIBarButtonItem!
     
+    public lazy var backTextOne = createView.cardBackOne
+    public lazy var backTextTwo = createView.cardBackSecond
+    public lazy var frontText = createView.cardFront
+    
+    
     private let  cardVC = CardsViewController()
     
     private var card = Card(id: "", quizTitle: "", facts: [""])
@@ -51,28 +56,58 @@ class CreateViewController: UIViewController {
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = createBarButton
         
+        createView.cardBackSecond.delegate = self
+        createView.cardBackOne.delegate = self
+        createView.cardFront.delegate = self
+        
+        
     }
     
     @objc private func createButtonPressed(_ sender: UIBarButtonItem) {
-
-       if dataPersistence.hasItemBeenSaved(card) {
-
-        self.showAlert(title: "Unable to save", message: "This item has already been saved")
         
-       } else {
-          do {
-            // save to documents directory
-            try dataPersistence.createItem(card)
-             navigationController?.pushViewController(cardVC, animated: true)
-          } catch {
-            print("error saving article: \(error)")
-          }
+        if !backTextTwo.hasText || !backTextOne.hasText || !frontText.hasText {
+            
+            self.showAlert(title: "Incomplete", message: "please compleete all fields")
+            
+                    } else if ((dataPersistence?.hasItemBeenSaved) != nil){
+            
+                        self.showAlert(title: "Unable to save", message: "This item has already been saved")
         }
-       
+        guard let firstFact = backTextOne.text, let secondFact = backTextTwo.text, let title = frontText.text  else { return}
+        
+        card = Card(id: "", quizTitle: title, facts: [firstFact,"\n", secondFact])
+        do {
+            
+            try dataPersistence.createItem(card)
+            //navigationController?.pushViewController(cardVC, animated: true)
+            
+        } catch {
+            print("error saving article: \(error)")
+        }
+         self.showAlert(title: "Success", message: "This item has been saved")
     }
+    
+    
+    
+    
     
     @objc private func cancelButtonPressed(_ sender: UIBarButtonItem) {
         
+        createView.cardBackSecond.text = ""
+        createView.cardBackOne.text = ""
+        createView.cardFront.placeholder = "Please enter a Topic/Tittle"
+        self.showAlert(title: "Try again", message: "Complete all fields and hit create to make your FlashCard")
     }
+    
+}
+
+
+extension CreateViewController: UITextFieldDelegate {
+    
+    
+}
+
+extension CreateViewController: UITextViewDelegate{
+    
     
 }

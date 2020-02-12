@@ -44,32 +44,15 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground // white when dark mode is off, black when dark mode is on
+        view.backgroundColor = .systemBackground
         fetchCards()
-        //self.navigationItem.title = (self.newsArticles.first?.section.capitalized ?? " ") + " News"
-        // setting up collection datasource and delegate
         searchView.collectionView.dataSource = self
         searchView.collectionView.delegate = self
-        
-        // register a collection view cell
         searchView.collectionView.register(SearchCardCell.self, forCellWithReuseIdentifier: "newCardCell")
         
-        // setup search bar
         searchView.searchBar.delegate = self
         
-        //        let sectionName = userPreference.getSectionName() ?? "Technology"
-        //        fetchStories(sectionName)
     }
-    // TODO:
-    //    private func fetchCards(){
-    //        do{
-    //          try  CardSupplyService.fetchCards()
-    //
-    //        } catch{
-    //
-    //        }
-    //    }
-    // TODO:
     
     
     private func fetchCards(){
@@ -89,7 +72,6 @@ extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return cardArray.count
-        // return 40
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -141,21 +123,18 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
-            //            fetchStories(sectionName)
+            fetchCards()
             return
         }
-        // filter articles based on searchText
+        fetchCards()
         cardArray = cardArray.filter { $0.quizTitle.lowercased().contains(searchText.lowercased()) }
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
 }
-
-// ADDITION: conforming to UserPreferenceDelegate
-//extension NewsFeedViewController: UserPreferenceDelegate {
-//    func didChangeNewsSection(_ userPreference: UserPreference, sectionName: String) {
-//        fetchStories(sectionName)
-//    }
-//}
-
 
 
 extension SearchViewController: SearchCardCellDelegate {

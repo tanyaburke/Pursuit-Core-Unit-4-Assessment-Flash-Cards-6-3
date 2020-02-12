@@ -53,7 +53,7 @@ class EmptyView: UIView {
               messageLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
               messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
               messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-              messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+              messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8)
             ])
           }
           
